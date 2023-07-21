@@ -173,7 +173,7 @@ iters = 3
 np.random.seed(seed=999)
 annotate = True
 
-if opt['num_categories'] == -1:
+if opts['num_categories'] == -1:
     if vocab_size == 0:
         num_categories = 1
     else:
