@@ -22,7 +22,8 @@ parser.add_argument('--alpha', type=float, default=0.1, help='stepsize for testi
 parser.add_argument('--test_truncation', type=float, default=1, help='truncation to use in test phase')
 parser.add_argument('--checkpoint_dir', type=str, default="", help='path for directory with the checkpoints of the trained model we want to use')
 parser.add_argument('--checkpoint', type=int, default=400000, help='which checkpoint to load')
-parser.add_argument('--mode', default="bigger_step", choices=["iterative", "bigger_step"],
+parser.add_argument('--num_categories', type=int, default=-1, help='number of categories to test')
+parser.add_argument('--mode', default="bigger_step", choices=["iterative", "bigger_step"], \
                     help="how to make the test sequences. bigger_step was used in the paper.")
 
 args = parser.parse_args()
@@ -172,10 +173,13 @@ iters = 3
 np.random.seed(seed=999)
 annotate = True
 
-if vocab_size == 0:
-    num_categories = 1
+if opt['num_categories'] == -1:
+    if vocab_size == 0:
+        num_categories = 1
+    else:
+        num_categories = vocab_size
 else:
-    num_categories = vocab_size
+    num_categories = opts["num_categories"]
 
 for y in range(num_categories):
 
